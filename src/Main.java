@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame marco = new JFrame("Pelota que Rebota con Barra");
+        JFrame marco = new JFrame("Brick Breaker");
         marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         int ancho = 800;
