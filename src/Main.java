@@ -13,7 +13,7 @@ public class Main {
         int ancho = 800;
         int alto = 600;
 
-        Pelota pelota = new Pelota(100, 100, 20, 5, 5, ancho, alto);
+        Pelota pelota = new Pelota(350, 450, 20, 5, 5, ancho, alto);
         Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);

@@ -17,7 +17,7 @@ public class Pelota {
         this.velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY); // Almacenar la velocidad inicial
     }
 
-    public void mover(int anchoPanel, int altoPanel, Barra barra, Bloques bloques) {
+    public void mover(int anchoPanel, int altoPanel, Barra barra) {
         // Actualizar posición
         x += velocidadX;
         y += velocidadY;
@@ -53,6 +53,11 @@ public class Pelota {
 
             normalizarVelocidad(); // Asegurar que la velocidad sea constante
         }
+    }
+
+    // Verificar colision inferior
+    public boolean verificarColisionInferior(int altoPanel) {
+        return y + radio >= altoPanel;
     }
 
     // Método para asegurar que la velocidad de la pelota siempre sea constante
