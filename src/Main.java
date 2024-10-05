@@ -20,7 +20,7 @@ public class Main {
         Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);
-        bloques.iniciarBloques(10,20);
+        bloques.iniciarBloques(7,10);
 
         PanelJuego panelJuego = new PanelJuego(pelota, barra, bloques);
         panelJuego.setPreferredSize(new Dimension(ancho, alto));

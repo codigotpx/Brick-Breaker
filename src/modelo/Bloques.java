@@ -23,16 +23,8 @@ public class Bloques {
     }
 
     // Metodos getter
-    public Bloque[][] getBloques() {
-        return bloques;
-    }
-
-    public int getAnchoPanel() {
-        return anchoPanel;
-    }
-
-    public int getAltoPanel() {
-        return altoPanel;
+    public Bloque getBloque(int fila, int columna) {
+        return bloques[fila][columna];
     }
 
     public int getFilas() {
@@ -43,7 +35,25 @@ public class Bloques {
         return bloques[0].length;
     }
 
-    public Bloque isBloquePresente(int fila, int columna) {
-        return bloques[fila][columna];
+    // Métodos para calcular la posición de un bloque en la fila/columna indicada
+    public int calcularPosicionX(int columna, int margen) {
+        int bloqueAncho = (anchoPanel - margen * (getColumnas() - 1)) / getColumnas();
+        return columna * (bloqueAncho + margen);
+    }
+
+    public int calcularPosicionY(int fila, int margen) {
+        int areaBloquesAlto = altoPanel / 3; // por ejemplo, los bloques ocupan 1/3 del alto del panel
+        int bloqueAlto = (areaBloquesAlto - margen * (getFilas() - 1)) / getFilas();
+        return fila * (bloqueAlto + margen);
+    }
+
+    // Métodos para obtener el tamaño de los bloques
+    public int getAnchoBloque(int margen) {
+        return (anchoPanel - margen * (getColumnas() - 1)) / getColumnas();
+    }
+
+    public int getAltoBloque(int margen) {
+        int areaBloquesAlto = altoPanel / 3; // 1/3 del alto total del panel para bloques
+        return (areaBloquesAlto - margen * (getFilas() - 1)) / getFilas();
     }
 }

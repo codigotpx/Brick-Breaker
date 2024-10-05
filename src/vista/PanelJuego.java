@@ -50,23 +50,18 @@ public class PanelJuego extends JPanel {
 
         // Dibujamos los bloques
         g.setColor(Color.GREEN);
-
-        int areaBloquesAlto = bloques.getAnchoPanel() / 5;
         int margen = 5;
-
-        int anchoDisponible = bloques.getAnchoPanel();
-        int bloqueAncho = (anchoDisponible - margen * (bloques.getColumnas() - 1)) / bloques.getColumnas();
-        int bloqueAlto = areaBloquesAlto / bloques.getFilas();
-
-        int anchoBloquesTotal = (bloqueAncho * bloques.getColumnas()) + (margen * (bloques.getColumnas() - 1));
-        int margenLateral = (anchoDisponible - anchoBloquesTotal) / 2;
 
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
-                if (bloques.isBloquePresente(i, j).isEstado()) {
-                    int x = margenLateral + j * (bloqueAncho + margen);
-                    int y = i * (bloqueAlto + margen);
-                    g.fillRect(x, y, bloqueAncho, bloqueAlto);
+                Bloque bloque = bloques.getBloque(i, j);
+                if (bloque.isEstado()) { // Si el bloque está presente
+                    int x = bloques.calcularPosicionX(j, margen);
+                    int y = bloques.calcularPosicionY(i, margen);
+                    int ancho = bloques.getAnchoBloque(margen);
+                    int alto = bloques.getAltoBloque(margen);
+
+                    g.fillRect(x, y, ancho, alto);
                 }
             }
         }
