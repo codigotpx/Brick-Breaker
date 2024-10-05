@@ -9,28 +9,21 @@ public class Nivel {
         this.bloques = bloques;
     }
 
-    public void nivel1() {
-        for (int i = 0; i < bloques.getFilas(); i++) {
-            for (int j = 0; j < bloques.getColumnas(); j++) {
-                Bloque bloque = bloques.getBloque(i, j);
-                if (i == j || i + j == bloques.getColumnas() - 1) {
-                    bloque.setEstado(false);
-                } else {
-                    bloque.setEstado(true);
-                }
-            }
-        }
-    }
 
-    public void nivel2() {
+
+    public void nivel1() {
         // Paso 1: Desactivamos todos los bloques
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
                 Bloque bloque = bloques.getBloque(i, j);
                 bloque.setEstado(false); // Desactiva todos los bloques inicialmente
+                if (i == 0) {
+                    bloque.setDurabilidad(1);
+                } else {
+                    bloque.setDurabilidad(0);
+                }
             }
         }
-
         // Paso 2: Activamos los bloques en un patrón de pirámide invertida
         for (int i = 0; i < bloques.getFilas(); i++) {
             // Al principio activamos todos, luego reducimos el rango de bloques activos
@@ -45,7 +38,7 @@ public class Nivel {
         }
     }
 
-    public void nivel3() {
+    public void nivel2() {
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
                 Bloque bloque = bloques.getBloque(i, j);
@@ -59,4 +52,19 @@ public class Nivel {
             }
         }
     }
+
+    public void nivel3() {
+        for (int i = 0; i < bloques.getFilas(); i++) {
+            for (int j = 0; j < bloques.getColumnas(); j++) {
+                Bloque bloque = bloques.getBloque(i, j);
+                if (i == j || i + j == bloques.getColumnas() - 1) {
+                    bloque.setEstado(false);
+                } else {
+                    bloque.setEstado(true);
+                }
+            }
+        }
+    }
+
+
 }

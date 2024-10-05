@@ -112,9 +112,14 @@ public class Pelota {
                             // Colisión en la parte superior o inferior del bloque
                             velocidadY = -velocidadY;
                         }
+                        if (bloque.getDurabilidad() == 0){
+                            // Desactivar el bloque tras la colisión
+                            bloque.setEstado(false);
+                        } else {
+                            int durabilidad = bloque.getDurabilidad();
+                            bloque.setDurabilidad(durabilidad - 1);
+                        }
 
-                        // Desactivar el bloque tras la colisión
-                        bloque.setEstado(false);
 
                         // Normalizar la velocidad para que no se acelere o desacelere
                         normalizarVelocidad();
