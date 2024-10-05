@@ -27,8 +27,11 @@ public class ControladorJuego {
         temporizador = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pelota.mover(800, 600, barra);
+                pelota.mover(800, 600, barra, bloques);
                 panelJuego.actualizarPanel();
+                if (pelota.verificarColisionConBloques(bloques)) {
+
+                }
             }
         });
     }
