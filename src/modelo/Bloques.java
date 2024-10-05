@@ -42,7 +42,7 @@ public class Bloques {
     }
 
     public int calcularPosicionY(int fila, int margen) {
-        int areaBloquesAlto = altoPanel / 3; // por ejemplo, los bloques ocupan 1/3 del alto del panel
+        int areaBloquesAlto = altoPanel / 2; // por ejemplo, los bloques ocupan 1/2 del alto del panel
         int bloqueAlto = (areaBloquesAlto - margen * (getFilas() - 1)) / getFilas();
         return fila * (bloqueAlto + margen);
     }
@@ -53,7 +53,7 @@ public class Bloques {
     }
 
     public int getAltoBloque(int margen) {
-        int areaBloquesAlto = altoPanel / 3; // 1/3 del alto total del panel para bloques
+        int areaBloquesAlto = altoPanel / 2; // 1/2 del alto total del panel para bloques
         return (areaBloquesAlto - margen * (getFilas() - 1)) / getFilas();
     }
 }

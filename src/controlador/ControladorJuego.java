@@ -1,9 +1,6 @@
 package controlador;
 
-import modelo.Barra;
-import modelo.Bloque;
-import modelo.Bloques;
-import modelo.Pelota;
+import modelo.*;
 import vista.PanelJuego;
 
 import javax.swing.*;
@@ -16,14 +13,16 @@ public class ControladorJuego {
     private Bloque bloque;
     private Bloques bloques;
     private PanelJuego panelJuego;
+    private Nivel nivel;
     private Timer temporizador;
 
-    public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques) {
+    public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques, Nivel nivel) {
         this.pelota = pelota;
         this.barra = barra;
         this.panelJuego = panelJuego;
         this.bloque = bloque;
         this.bloques = bloques;
+        this.nivel = nivel;
 
         temporizador = new Timer(10, new ActionListener() {
             @Override

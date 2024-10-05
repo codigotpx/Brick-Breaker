@@ -1,8 +1,5 @@
 import controlador.ControladorJuego;
-import modelo.Barra;
-import modelo.Bloque;
-import modelo.Bloques;
-import modelo.Pelota;
+import modelo.*;
 import vista.PanelJuego;
 
 import javax.swing.*;
@@ -20,12 +17,15 @@ public class Main {
         Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);
-        bloques.iniciarBloques(7,10);
+        bloques.iniciarBloques(10,10);
+        Nivel nivel = new Nivel(bloques);
+        nivel.nivel3();
+
 
         PanelJuego panelJuego = new PanelJuego(pelota, barra, bloques);
         panelJuego.setPreferredSize(new Dimension(ancho, alto));
 
-        ControladorJuego controlador = new ControladorJuego(pelota, barra, panelJuego,bloque, bloques);
+        ControladorJuego controlador = new ControladorJuego(pelota, barra, panelJuego,bloque, bloques, nivel);
 
         marco.add(panelJuego);
         marco.pack();

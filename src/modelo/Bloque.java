@@ -7,7 +7,7 @@ public class Bloque {
 
     public Bloque() {
         this.durabilidad = 0;
-        this.estado = true; // True para que se muestre en pantalla
+        this.estado = false; // True para que se muestre en pantalla
     }
 
     // Metodos para interactuar con el bloque
