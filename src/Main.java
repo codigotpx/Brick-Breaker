@@ -19,7 +19,7 @@ public class Main {
         Bloques bloques = new Bloques(bloque, ancho, alto);
         bloques.iniciarBloques(10,10);
         Nivel nivel = new Nivel(bloques);
-        nivel.nivel3();
+        nivel.nivel1();
 
 
         PanelJuego panelJuego = new PanelJuego(pelota, barra, bloques);

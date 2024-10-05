@@ -17,7 +17,7 @@ public class Pelota {
         this.velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY); // Almacenar la velocidad inicial
     }
 
-    public void mover(int anchoPanel, int altoPanel, Barra barra) {
+    public void mover(int anchoPanel, int altoPanel, Barra barra, Bloques bloques) {
         // Actualizar posición
         x += velocidadX;
         y += velocidadY;
@@ -75,6 +75,53 @@ public class Pelota {
         // Si la distancia es menor que el radio de la pelota, hay colisión.
         return (distanciaX * distanciaX + distanciaY * distanciaY) < (radio * radio);
     }
+
+    // Verificar colisión con los bloques
+    public boolean verificarColisionConBloques(Bloques bloques) {
+        int margen = 5; // Margen entre los bloques
+        boolean colision = false;
+
+        for (int i = 0; i < bloques.getFilas(); i++) {
+            for (int j = 0; j < bloques.getColumnas(); j++) {
+                Bloque bloque = bloques.getBloque(i, j);
+
+                if (bloque.isEstado()) { // Si el bloque está activo
+                    // Obtener las coordenadas y dimensiones del bloque
+                    int bloqueX = bloques.calcularPosicionX(j, margen);
+                    int bloqueY = bloques.calcularPosicionY(i, margen);
+                    int bloqueAncho = bloques.getAnchoBloque(margen);
+                    int bloqueAlto = bloques.getAltoBloque(margen);
+
+                    // Verificar si la pelota colisiona con el bloque
+                    if (x + radio > bloqueX && x - radio < bloqueX + bloqueAncho &&
+                            y + radio > bloqueY && y - radio < bloqueY + bloqueAlto) {
+
+                        // Determinamos qué lado del bloque fue golpeado
+                        boolean colisionLateral = x < bloqueX || x > bloqueX + bloqueAncho;
+                        boolean colisionSuperiorInferior = y < bloqueY || y > bloqueY + bloqueAlto;
+
+                        if (colisionLateral && !colisionSuperiorInferior) {
+                            // Colisión en los lados del bloque (izquierda o derecha)
+                            velocidadX = -velocidadX;
+                        } else if (colisionSuperiorInferior) {
+                            // Colisión en la parte superior o inferior del bloque
+                            velocidadY = -velocidadY;
+                        }
+
+                        // Desactivar el bloque tras la colisión
+                        bloque.setEstado(false);
+
+                        // Normalizar la velocidad para que no se acelere o desacelere
+                        normalizarVelocidad();
+
+                        colision = true; // Salir después de encontrar una colisión
+                    }
+                }
+            }
+        }
+        return colision;
+    }
+
 
     // Métodos getter
     public double getX() {
