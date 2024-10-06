@@ -1,9 +1,6 @@
 package vista;
 
-import modelo.Barra;
-import modelo.Bloque;
-import modelo.Bloques;
-import modelo.Pelota;
+import modelo.*;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -23,6 +20,10 @@ public class PanelJuego extends JPanel {
         this.pelota = pelota;
         this.barra = barra;
         this.bloques = bloques;
+
+        // Posicionar la pelota encima de la barra al inicio
+        pelota.setX(barra.getX() + barra.getAncho() / 2.0);  // Centrar la pelota en la barra
+        pelota.setY(barra.getY() - pelota.getRadio() - 5);    // Colocar la pelota justo encima de la bar
 
         // Cargar la imagen de la pelota
         imagenPelota = new ImageIcon(getClass().getResource("/resources/imagenes/bolaFinal.png")).getImage(); // Cargar desde carpeta resources
