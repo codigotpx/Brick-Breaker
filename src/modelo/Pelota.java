@@ -81,10 +81,9 @@ public class Pelota {
         return (distanciaX * distanciaX + distanciaY * distanciaY) < (radio * radio);
     }
 
-    // Verificar colisión con los bloques
-    public boolean verificarColisionConBloques(Bloques bloques) {
+    public int verificarColisionConBloques(Bloques bloques) {
         int margen = 5; // Margen entre los bloques
-        boolean colision = false;
+        int colision = 0;
 
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
@@ -112,24 +111,26 @@ public class Pelota {
                             // Colisión en la parte superior o inferior del bloque
                             velocidadY = -velocidadY;
                         }
-                        if (bloque.getDurabilidad() == 0){
+                        if (bloque.getDurabilidad() == 0) {
                             // Desactivar el bloque tras la colisión
                             bloque.setEstado(false);
+                            colision = 1; // Colisión destructiva
                         } else {
                             int durabilidad = bloque.getDurabilidad();
                             bloque.setDurabilidad(durabilidad - 1);
+                            colision = 2; // Colisión normal
                         }
-
 
                         // Normalizar la velocidad para que no se acelere o desacelere
                         normalizarVelocidad();
 
-                        colision = true; // Salir después de encontrar una colisión
+                        // Salir después de encontrar una colisión
+                        return colision; // Devuelve inmediatamente tras la primera colisión
                     }
                 }
             }
         }
-        return colision;
+        return colision; // Devuelve 0 si no hay colisión
     }
 
 

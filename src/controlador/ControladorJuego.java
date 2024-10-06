@@ -29,11 +29,16 @@ public class ControladorJuego {
             public void actionPerformed(ActionEvent e) {
                 pelota.mover(800, 600, barra);
                 panelJuego.actualizarPanel();
-                if (pelota.verificarColisionConBloques(bloques)) {
-                    // Darle sonido
+
+                // Manejar colisiones con bloques
+                int resultadoColision = pelota.verificarColisionConBloques(bloques);
+                if (resultadoColision == 2) {
+                    panelJuego.reproducirSonido("resources/sonidos/vidrio-roto.wav"); // Sonido para colisión destructiva
+                } else if (resultadoColision == 1) {
+                    panelJuego.reproducirSonido("resources/sonidos/breaking-glass.wav"); // Sonido para colisión normal
                 }
                 if (pelota.verificarColision(barra)) {
-                    // Darle sonido
+                    panelJuego.reproducirSonido("resources/sonidos/golpe-seco.wav");
                 }
                 if (pelota.verificarColisionInferior(600)) {
                     detener();
