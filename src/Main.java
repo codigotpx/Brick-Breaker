@@ -30,7 +30,5 @@ public class Main {
         marco.add(panelJuego);
         marco.pack();
         marco.setVisible(true);
-
-        controlador.iniciar();
     }
 }
