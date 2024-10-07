@@ -42,6 +42,7 @@ public class ControladorJuego {
                     panelJuego.reproducirSonido("resources/sonidos/golpe-seco.wav");
                 }
                 if (pelota.verificarColisionInferior(600)) {
+                    panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     detener();
                 }
             }
@@ -55,8 +56,6 @@ public class ControladorJuego {
                     enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
                     temporizador.start();
                     iniciar();  // Iniciar el temporizador para que la pelota comience a moverse
-                }else{
-                    temporizador.stop();
                 }
             }
         });

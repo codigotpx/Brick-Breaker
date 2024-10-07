@@ -146,12 +146,6 @@ public class PanelJuego extends JPanel {
             }
         }
     }
-
-
-
-
-
-
     public void actualizarPanel() {
         repaint();
     }
