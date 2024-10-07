@@ -22,6 +22,18 @@ public class Bloques {
         }
     }
 
+    // Verificamos si todos los bloques estan rotos
+    public boolean todosDestruidos() {
+        for (int i = 0; i < bloques.length; i++) {
+            for (int j = 0; j < bloques[i].length; j++) {
+                if (bloques[i][j].isEstado()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // Metodos getter
     public Bloque getBloque(int fila, int columna) {
         return bloques[fila][columna];

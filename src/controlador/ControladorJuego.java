@@ -15,8 +15,9 @@ public class ControladorJuego {
     private Nivel nivel;
     private Timer temporizador;
     private boolean enMovimiento;  // Variable para verificar si el juego ya está en movimiento
+    private Vida vida;
 
-    public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques, Nivel nivel) {
+    public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques, Nivel nivel, Vida vida) {
         this.pelota = pelota;
         this.barra = barra;
         this.panelJuego = panelJuego;
@@ -24,6 +25,7 @@ public class ControladorJuego {
         this.bloques = bloques;
         this.nivel = nivel;
         this.enMovimiento = false;  // Al principio, el juego no está en movimiento
+        this.vida = vida;
 
         temporizador = new Timer(10, new ActionListener() {
             @Override
@@ -43,7 +45,11 @@ public class ControladorJuego {
                 }
                 if (pelota.verificarColisionInferior(600)) {
                     panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
+                    vida.eliminarVida();
                     detener();
+                }
+                if (bloques.todosDestruidos()) {
+                    nivel.pintarNiveles();
                 }
             }
         });

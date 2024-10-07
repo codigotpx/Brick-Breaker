@@ -19,12 +19,16 @@ public class PanelJuego extends JPanel {
     private Image imagenBarra; // Declarar la imagen de la raqueta
     private Image imagenBloqueVivo; // Imagen para bloque con resistencia
     private Image imagenBloqueMuerto; // Imagen para bloque sin resistencia
+    private Image imagenVida; // Imagen para las vidas
+    private Image imagenPerder; // Imagen para el fin del juego
     private Image fondo;
+    private Vida vida;
 
-    public PanelJuego(Pelota pelota, Barra barra, Bloques bloques) {
+    public PanelJuego(Pelota pelota, Barra barra, Bloques bloques, Vida vida) {
         this.pelota = pelota;
         this.barra = barra;
         this.bloques = bloques;
+        this.vida = vida;
 
         // Posicionar la pelota encima de la barra al inicio
         pelota.setX(barra.getX() + barra.getAncho() / 2.0);  // Centrar la pelota en la barra
@@ -39,6 +43,11 @@ public class PanelJuego extends JPanel {
         // Cargar imágenes de bloques
         imagenBloqueVivo = new ImageIcon(getClass().getResource("/resources/imagenes/CristalNuevo.png")).getImage();
         imagenBloqueMuerto = new ImageIcon(getClass().getResource("/resources/imagenes/CristalRoto.png")).getImage();
+
+        imagenVida = new ImageIcon(getClass().getResource("/resources/imagenes/vida.png")).getImage();
+
+        // Cargar imagenes de game over
+        imagenPerder = new ImageIcon(getClass().getResource("/resources/imagenes/Game-Over.png")).getImage();
 
         addMouseMotionListener(new MouseMotionListener() {
             @Override
@@ -143,6 +152,32 @@ public class PanelJuego extends JPanel {
                     // Dibujar la imagen del bloque en la posición y tamaño calculados
                     g.drawImage(imagenBloque, x, y, ancho, alto, this);
                 }
+            }
+        }
+
+        // Dibujamos las vidas
+        if (imagenVida != null) {
+            int x = 0;
+            for (int i = 0; i < vida.getVidas(); i++) {
+                g.drawImage(imagenVida,
+                        x,
+                        550,
+                        110,
+                        100,
+                        this);
+                x += 20;
+            }
+        }
+
+        // Dibujamos el game over
+        if (imagenPerder != null) {
+            if (vida.getVidas() == 0) {
+                g.drawImage(imagenPerder,
+                         30,
+                        5,
+                        700,
+                        700,
+                        this);
             }
         }
     }

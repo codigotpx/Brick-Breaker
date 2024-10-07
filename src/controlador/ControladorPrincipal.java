@@ -31,15 +31,15 @@ public class ControladorPrincipal {
         Bloques bloques = new Bloques(bloque, ancho, alto);
         bloques.iniciarBloques(10,10);
         Nivel nivel = new Nivel(bloques);
-        nivel.nivel3();
+        Vida vida = new Vida();
 
         // Creamos panel juego
-        panelJuego = new PanelJuego(pelota, barra,bloques);
+        panelJuego = new PanelJuego(pelota, barra,bloques, vida);
         panelJuego.setPreferredSize(new Dimension(ancho, alto));
         panelJuego.setFondo("resources/imagenes/Espaciop.jpg");
 
         // Incializamos el controlador del juego
-        controladorJuego = new ControladorJuego(pelota, barra, panelJuego, bloque,bloques, nivel);
+        controladorJuego = new ControladorJuego(pelota, barra, panelJuego, bloque,bloques, nivel, vida);
 
         // Creamos panel del menú
         menuJuego = new MenuJuego();
@@ -54,6 +54,7 @@ public class ControladorPrincipal {
 
         // Mostrar el menú al iniciar
         mostrarMenu();
+
     }
 
     public void mostrarMenu() {
