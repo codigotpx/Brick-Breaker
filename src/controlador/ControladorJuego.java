@@ -6,6 +6,8 @@ import vista.PanelJuego;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ControladorJuego {
     private Pelota pelota;
@@ -15,6 +17,7 @@ public class ControladorJuego {
     private PanelJuego panelJuego;
     private Nivel nivel;
     private Timer temporizador;
+    private boolean enMovimiento;  // Variable para verificar si el juego ya está en movimiento
 
     public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques, Nivel nivel) {
         this.pelota = pelota;
@@ -23,6 +26,7 @@ public class ControladorJuego {
         this.bloque = bloque;
         this.bloques = bloques;
         this.nivel = nivel;
+        this.enMovimiento = false;  // Al principio, el juego no está en movimiento
 
         temporizador = new Timer(10, new ActionListener() {
             @Override
@@ -41,17 +45,35 @@ public class ControladorJuego {
                     panelJuego.reproducirSonido("resources/sonidos/golpe-seco.wav");
                 }
                 if (pelota.verificarColisionInferior(600)) {
+                    panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     detener();
+                }
+            }
+        });
+        // Agregar el MouseListener para detectar clics en el PanelJuego
+        panelJuego.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!enMovimiento) {  // Verificar si el juego está detenido
+                    enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
+                    temporizador.start();
+                    iniciar();  // Iniciar el temporizador para que la pelota comience a moverse
+                }else{
+                    temporizador.stop();
                 }
             }
         });
     }
 
+
+
     public void iniciar() {
+        enMovimiento = true;
         temporizador.start();
     }
 
     public void detener() {
+        enMovimiento = false;
         temporizador.stop();
     }
 }

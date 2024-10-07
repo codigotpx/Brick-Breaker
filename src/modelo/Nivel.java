@@ -49,6 +49,12 @@ public class Nivel {
                 if (j < bloques.getColumnas() - i) {
                     bloques.getBloque(i ,bloques.getColumnas() - 1 -j).setEstado(true);
                 }
+
+                if (i == j || i + j == bloques.getColumnas() - 1 || i == 0) {
+                    bloque.setDurabilidad(1);
+                } else {
+                    bloque.setDurabilidad(0);
+                }
             }
         }
     }
@@ -57,6 +63,11 @@ public class Nivel {
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
                 Bloque bloque = bloques.getBloque(i, j);
+                if ( (i == 0 || i == bloques.getFilas() - 1) || (j == 0) || (j == bloques.getColumnas() - 1)){
+                    bloque.setDurabilidad(1);
+                }  else {
+                    bloque.setDurabilidad(0);
+                }
                 if (i == j || i + j == bloques.getColumnas() - 1) {
                     bloque.setEstado(false);
                 } else {

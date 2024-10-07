@@ -19,11 +19,12 @@ public class Main {
         Bloques bloques = new Bloques(bloque, ancho, alto);
         bloques.iniciarBloques(10,10);
         Nivel nivel = new Nivel(bloques);
-        nivel.nivel1();
+        nivel.nivel3();
 
 
         PanelJuego panelJuego = new PanelJuego(pelota, barra, bloques);
         panelJuego.setPreferredSize(new Dimension(ancho, alto));
+        panelJuego.setFondo("resources/imagenes/Espaciop.jpg");
 
         ControladorJuego controlador = new ControladorJuego(pelota, barra, panelJuego,bloque, bloques, nivel);
 
@@ -31,6 +32,5 @@ public class Main {
         marco.pack();
         marco.setVisible(true);
 
-        controlador.iniciar();
     }
 }
