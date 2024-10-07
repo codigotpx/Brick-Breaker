@@ -132,9 +132,9 @@ public class Pelota {
         }
         return colision; // Devuelve 0 si no hay colisión
     }
+    // setter
 
 
-    // Metodos setter
     public void setX(double x) {
         this.x = x;
     }

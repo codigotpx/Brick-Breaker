@@ -4,10 +4,7 @@ import modelo.*;
 import vista.PanelJuego;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class ControladorJuego {
     private Pelota pelota;
@@ -45,11 +42,11 @@ public class ControladorJuego {
                     panelJuego.reproducirSonido("resources/sonidos/golpe-seco.wav");
                 }
                 if (pelota.verificarColisionInferior(600)) {
-                    panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     detener();
                 }
             }
         });
+
         // Agregar el MouseListener para detectar clics en el PanelJuego
         panelJuego.addMouseListener(new MouseAdapter() {
             @Override
@@ -65,15 +62,13 @@ public class ControladorJuego {
         });
     }
 
-
-
     public void iniciar() {
-        enMovimiento = true;
+        enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
         temporizador.start();
     }
 
     public void detener() {
-        enMovimiento = false;
+        enMovimiento = false;  // Cambiar el estado para indicar que el juego está detenido
         temporizador.stop();
     }
 }

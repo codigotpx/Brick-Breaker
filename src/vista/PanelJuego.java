@@ -1,9 +1,6 @@
 package vista;
 
-import modelo.Barra;
-import modelo.Bloque;
-import modelo.Bloques;
-import modelo.Pelota;
+import modelo.*;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
