@@ -21,14 +21,17 @@ public class PanelJuego extends JPanel {
     private Image imagenBloqueMuerto; // Imagen para bloque sin resistencia
     private Image imagenVida; // Imagen para las vidas
     private Image imagenPerder; // Imagen para el fin del juego
+    private Image imagenGanar;
     private Image fondo;
     private Vida vida;
+    private Nivel nivel;
 
-    public PanelJuego(Pelota pelota, Barra barra, Bloques bloques, Vida vida) {
+    public PanelJuego(Pelota pelota, Barra barra, Bloques bloques, Vida vida, Nivel nivel) {
         this.pelota = pelota;
         this.barra = barra;
         this.bloques = bloques;
         this.vida = vida;
+        this.nivel = nivel;
 
         // Cargar la imagen de la pelota
         imagenPelota = new ImageIcon(getClass().getResource("/resources/imagenes/bolap.png")).getImage();
@@ -45,6 +48,9 @@ public class PanelJuego extends JPanel {
         // Cargar imagenes de game over
         imagenPerder = new ImageIcon(getClass().getResource("/resources/imagenes/Game-Over.png")).getImage();
 
+        // Cargar imagen de ganar
+        imagenGanar = new ImageIcon(getClass().getResource("/resources/imagenes/You-win.png")).getImage();
+
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -57,10 +63,6 @@ public class PanelJuego extends JPanel {
         });
 
         setPreferredSize(new Dimension(800, 600));
-    }
-
-    public Vida getVida() {
-        return vida;
     }
 
     public void setFondo(String ruta) {
@@ -180,6 +182,19 @@ public class PanelJuego extends JPanel {
                         this);
             }
         }
+
+        // Dibujamos el tu ganas
+        if (imagenGanar != null) {
+            if (nivel.ganar()) {
+                g.drawImage(imagenGanar,
+                        30,
+                        5,
+                        700,
+                        700,
+                        this);
+            }
+        }
+
     }
     public void actualizarPanel() {
         repaint();

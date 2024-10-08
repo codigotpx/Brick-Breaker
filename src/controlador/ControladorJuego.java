@@ -27,10 +27,10 @@ public class ControladorJuego {
         this.enMovimiento = false;  // Al principio, el juego no está en movimiento
         this.vida = vida;
 
-        temporizador = new Timer(10, new ActionListener() {
+        temporizador = new Timer(15, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pelota.mover( barra);
+                pelota.mover(barra);
                 panelJuego.actualizarPanel();
 
                 // Manejar colisiones con bloques
@@ -93,8 +93,18 @@ public class ControladorJuego {
         bloques.iniciarBloques(10,10);
         nivel.nivel1();
         pelota.posicionarPelota();
+        pelota.setVelocidadX(5);
+        pelota.setVelocidadY(5);
         pelota.activarPelota();
         barra.activarBarra();
         barra.setX((int) barra.getAnchoPanel()/2);
+    }
+
+    public Vida getVida() {
+        return vida;
+    }
+
+    public Nivel nivel() {
+        return nivel;
     }
 }

@@ -14,7 +14,7 @@ public class Nivel {
     }
 
     public void pintarNiveles() {
-        if (bloques.todosDestruidos()) {
+        if (bloques.todosDestruidos() && nivel < 3) {
             nivel++;
             switch (nivel) {
                 case 1:
@@ -28,7 +28,7 @@ public class Nivel {
                     nivel3();
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Felicidades has ganado una 4 x 4");
+                    // No hace nada
             }
         }
     }
@@ -96,5 +96,11 @@ public class Nivel {
         }
     }
 
+    public boolean ganar() {
+        if (nivel == 3 && bloques.todosDestruidos()) {
+            return true;
+        }
+        return false;
+    }
 
 }

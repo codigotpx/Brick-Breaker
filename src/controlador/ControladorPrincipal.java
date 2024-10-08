@@ -26,7 +26,7 @@ public class ControladorPrincipal {
         int alto = 600;
 
         // Inicializamos elemntos del juego
-        Pelota pelota = new Pelota(350, 480, 20, 5, 5, ancho, alto);
+        Pelota pelota = new Pelota(350, 480, 20, 1, 1, ancho, alto);
         Barra barra = new Barra(350, alto - 50, 100, 10, ancho, alto);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);
@@ -35,7 +35,7 @@ public class ControladorPrincipal {
         Vida vida = new Vida();
 
         // Creamos panel juego
-        panelJuego = new PanelJuego(pelota, barra,bloques, vida);
+        panelJuego = new PanelJuego(pelota, barra,bloques, vida, nivel);
         panelJuego.setPreferredSize(new Dimension(ancho, alto));
         panelJuego.setFondo("resources/imagenes/Espaciop.jpg");
 
@@ -84,7 +84,20 @@ public class ControladorPrincipal {
         while (true) {
             panelJuego.actualizarPanel();
 
-            if (panelJuego.getVida().getVidas() == 0) {
+            if (controladorJuego.getVida().getVidas() == 0) {
+                enJuego = false;
+                controladorJuego.pausarJuego();
+                try {
+                    Thread.sleep(3000); // Pausar por 3 segundos
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                pausarYMostrarMenu();
+                controladorJuego.reiniciarJuego();
+                break;
+            }
+
+            if (controladorJuego.nivel().ganar()) {
                 enJuego = false;
                 controladorJuego.pausarJuego();
                 try {
