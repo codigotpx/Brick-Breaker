@@ -7,55 +7,67 @@ public class Pelota {
     private double velocidadX, velocidadY; // Velocidad de la pelota
     private double radio; // Radio de la pelota
     private double velocidadInicial; // Velocidad constante que siempre tendrá la pelota
+    private boolean pelotaActiva;
+    private int anchoPanel;
+    private int altoPanel;
 
-    public Pelota(double x, double y, double radio, double velocidadX, double velocidadY, double ancho, int alto) {
+    public Pelota(double x, double y, double radio, double velocidadX, double velocidadY, int anchoPnel, int altoPanel) {
         this.x = x;
         this.y = y;
         this.radio = radio;
         this.velocidadX = velocidadX;
         this.velocidadY = velocidadY;
-        // this.velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY); // Almacenar la velocidad inicial
+        this.pelotaActiva = true;
+        this.anchoPanel = anchoPnel;
+        this.altoPanel = altoPanel;
     }
 
-    public void mover(int anchoPanel, int altoPanel, Barra barra) {
-        // Actualizar posición
-        x += velocidadX;
-        y += velocidadY;
-        velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
+    public void mover(Barra barra) {
+        if(pelotaActiva){
+            // Actualizar posición
+            x += velocidadX;
+            y += velocidadY;
+            velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
 
-        // Rebote en los bordes horizontales
-        if (x - radio < 0 || x + radio > anchoPanel) {
-            velocidadX = -velocidadX;
-            x = Math.max(radio, Math.min(anchoPanel - radio, x)); // Mantener dentro de los limites
-            normalizarVelocidad(); // Mantener velocidad constante
-        }
+            // Rebote en los bordes horizontales
+            if (x - radio < 0 || x + radio > anchoPanel) {
+                velocidadX = -velocidadX;
+                x = Math.max(radio, Math.min(anchoPanel - radio, x)); // Mantener dentro de los limites
+                normalizarVelocidad(); // Mantener velocidad constante
+            }
 
-        // Rebote en el suelo y en el techo
-        if (y + radio > altoPanel) {
-            velocidadY = -velocidadY;
-            y = altoPanel - radio;
-            normalizarVelocidad(); // Mantener velocidad constante
-        } else if (y - radio < 0) {
-            velocidadY = -velocidadY;
-            y = radio;
-            normalizarVelocidad(); // Mantener velocidad constante
-        }
+            // Rebote en el suelo y en el techo
+            if (y + radio > altoPanel) {
+                velocidadY = -velocidadY;
+                y = altoPanel - radio;
+                normalizarVelocidad(); // Mantener velocidad constante
+            } else if (y - radio < 0) {
+                velocidadY = -velocidadY;
+                y = radio;
+                normalizarVelocidad(); // Mantener velocidad constante
+            }
 
-        // Colisión con la raqueta tipo "Brick Breaker"
-        if (verificarColision(barra)) {
-            // Rebote hacia arriba
-            velocidadY = -Math.abs(velocidadY); // Rebote vertical, siempre hacia arriba
+            // Colisión con la raqueta tipo "Brick Breaker"
+            if (verificarColision(barra)) {
+                // Rebote hacia arriba
+                velocidadY = -Math.abs(velocidadY); // Rebote vertical, siempre hacia arriba
 
-            // Ajuste en la velocidad horizontal basado en la posición de impacto
-            double desplazamientoCentro = (x - (barra.getX() + barra.getAncho() / 2)) / (barra.getAncho() / 2);
+                // Ajuste en la velocidad horizontal basado en la posición de impacto
+                double desplazamientoCentro = (x - (barra.getX() + barra.getAncho() / 2)) / (barra.getAncho() / 2);
 
-            // Ajustar la velocidad horizontal según el punto de impacto
-            velocidadX = desplazamientoCentro * 5; // El factor 5 ajusta la sensibilidad del rebote
+                // Ajustar la velocidad horizontal según el punto de impacto
+                velocidadX = desplazamientoCentro * 5; // El factor 5 ajusta la sensibilidad del rebote
 
-            normalizarVelocidad(); // Asegurar que la velocidad sea constante
+                normalizarVelocidad(); // Asegurar que la velocidad sea constante
+            }
         }
     }
 
+    // posicionar la pelota en el centro del panel
+    public void posicionarPelota(){
+        x = (double) anchoPanel / 2; //posicion central en el eje x
+        y = (double) altoPanel * 0.83; // posicion del 83% sin importar el alto del panel
+    }
     // Verificar colision inferior
     public boolean verificarColisionInferior(int altoPanel) {
         return y + radio >= altoPanel;
@@ -133,9 +145,15 @@ public class Pelota {
         }
         return colision; // Devuelve 0 si no hay colisión
     }
+
+    public void detenerPelota(){
+        pelotaActiva = false;
+    }
+
+    public void activarPelota(){
+        pelotaActiva = true;
+    }
     // setter
-
-
     public void setX(double x) {
         this.x = x;
     }

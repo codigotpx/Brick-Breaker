@@ -30,7 +30,7 @@ public class ControladorJuego {
         temporizador = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pelota.mover(800, 600, barra);
+                pelota.mover( barra);
                 panelJuego.actualizarPanel();
 
                 // Manejar colisiones con bloques
@@ -46,15 +46,15 @@ public class ControladorJuego {
                 if (pelota.verificarColisionInferior(600)) {
                     panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     vida.eliminarVida();
-                    pelota.setX(panelJuego.getWidth() / 2.0);
-                    pelota.setY(500);
+                    pelota.posicionarPelota();
+                    barra.posicionarBarra();
                     detener();
                 }
                 if (bloques.todosDestruidos()) {
                     detener();
                     nivel.pintarNiveles();
-                    pelota.setX(panelJuego.getWidth() / 2.0);
-                    pelota.setY(500);
+                    pelota.posicionarPelota();
+                    barra.posicionarBarra();
                     pelota.setVelocidadX(pelota.getVelocidadX() + 5);
                     pelota.setVelocidadY(pelota.getVelocidadY() + 5);
                 }
@@ -65,7 +65,7 @@ public class ControladorJuego {
         panelJuego.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!enMovimiento) {  // Verificar si el juego está detenido
+                if (!enMovimiento && vida.getVidas() > 0) {  // Verificar si el juego está detenido
                     enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
                     temporizador.start();
                     iniciar();  // Iniciar el temporizador para que la pelota comience a moverse
@@ -83,12 +83,18 @@ public class ControladorJuego {
         enMovimiento = false;  // Cambiar el estado para indicar que el juego está detenido
         temporizador.stop();
     }
+    public void pausarJuego(){
+        pelota.detenerPelota();
+        barra.detenerBarra();
+    }
 
     public void reiniciarJuego() {
         vida.setVidas(3);
         bloques.iniciarBloques(10,10);
         nivel.nivel1();
-        pelota.setX(panelJuego.getWidth() / 2.0);
-        pelota.setY(400);
+        pelota.posicionarPelota();
+        pelota.activarPelota();
+        barra.activarBarra();
+        barra.setX((int) barra.getAnchoPanel()/2);
     }
 }

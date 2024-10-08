@@ -13,6 +13,7 @@ public class ControladorPrincipal {
     private PanelJuego panelJuego;
     private MenuJuego menuJuego;
     private ControladorJuego controladorJuego;
+    private boolean enJuego;
 
     public ControladorPrincipal(JFrame marco) {
         this.marco = marco;
@@ -26,7 +27,7 @@ public class ControladorPrincipal {
 
         // Inicializamos elemntos del juego
         Pelota pelota = new Pelota(350, 480, 20, 5, 5, ancho, alto);
-        Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
+        Barra barra = new Barra(350, alto - 50, 100, 10, ancho, alto);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);
         bloques.iniciarBloques(10,10);
@@ -51,6 +52,12 @@ public class ControladorPrincipal {
                 mostrarJuego(); // Cambiamos de panel cuando se muestre el boton
             }
         });
+        menuJuego.SalirBoton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         // Mostrar el menú al iniciar
         mostrarMenu();
@@ -73,10 +80,13 @@ public class ControladorPrincipal {
     }
 
     private void bucleJuego() {
+        enJuego = true;
         while (true) {
             panelJuego.actualizarPanel();
 
             if (panelJuego.getVida().getVidas() == 0) {
+                enJuego = false;
+                controladorJuego.pausarJuego();
                 try {
                     Thread.sleep(3000); // Pausar por 3 segundos
                 } catch (InterruptedException e) {
@@ -96,12 +106,13 @@ public class ControladorPrincipal {
         // Crear un nuevo hilo para manejar la pausa
         new Thread(() -> {
             try {
-                Thread.sleep(3000); // Pausar por 3 segundos
+                Thread.sleep(0); // Pausar por 3 segundos
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             // Volver a mostrar el menú después de la pausa
+            controladorJuego.reiniciarJuego();
             SwingUtilities.invokeLater(this::mostrarMenu);
         }).start();
     }
