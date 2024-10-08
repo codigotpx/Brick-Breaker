@@ -25,12 +25,12 @@ public class ControladorPrincipal {
         int alto = 600;
 
         // Inicializamos elemntos del juego
-        Pelota pelota = new Pelota(350, 450, 20, 5, 5, ancho, alto);
+        Pelota pelota = new Pelota(350, 480, 20, 5, 5, ancho, alto);
         Barra barra = new Barra(350, alto - 50, 100, 10, ancho);
         Bloque bloque = new Bloque();
         Bloques bloques = new Bloques(bloque, ancho, alto);
         bloques.iniciarBloques(10,10);
-        Nivel nivel = new Nivel(bloques);
+        Nivel nivel = new Nivel(bloques, pelota);
         Vida vida = new Vida();
 
         // Creamos panel juego
@@ -68,5 +68,41 @@ public class ControladorPrincipal {
         marco.revalidate();
         marco.repaint();
         controladorJuego.iniciar();
+
+        new Thread(this::bucleJuego).start();
+    }
+
+    private void bucleJuego() {
+        while (true) {
+            panelJuego.actualizarPanel();
+
+            if (panelJuego.getVida().getVidas() == 0) {
+                try {
+                    Thread.sleep(3000); // Pausar por 3 segundos
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                pausarYMostrarMenu();
+                controladorJuego.reiniciarJuego();
+                break;
+            }
+
+            panelJuego.repaint();
+
+        }
+    }
+
+    private void pausarYMostrarMenu() {
+        // Crear un nuevo hilo para manejar la pausa
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000); // Pausar por 3 segundos
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Volver a mostrar el menú después de la pausa
+            SwingUtilities.invokeLater(this::mostrarMenu);
+        }).start();
     }
 }

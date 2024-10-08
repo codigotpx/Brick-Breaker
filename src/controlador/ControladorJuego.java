@@ -46,10 +46,17 @@ public class ControladorJuego {
                 if (pelota.verificarColisionInferior(600)) {
                     panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     vida.eliminarVida();
+                    pelota.setX(panelJuego.getWidth() / 2.0);
+                    pelota.setY(500);
                     detener();
                 }
                 if (bloques.todosDestruidos()) {
+                    detener();
                     nivel.pintarNiveles();
+                    pelota.setX(panelJuego.getWidth() / 2.0);
+                    pelota.setY(500);
+                    pelota.setVelocidadX(pelota.getVelocidadX() + 5);
+                    pelota.setVelocidadY(pelota.getVelocidadY() + 5);
                 }
             }
         });
@@ -75,5 +82,13 @@ public class ControladorJuego {
     public void detener() {
         enMovimiento = false;  // Cambiar el estado para indicar que el juego está detenido
         temporizador.stop();
+    }
+
+    public void reiniciarJuego() {
+        vida.setVidas(3);
+        bloques.iniciarBloques(10,10);
+        nivel.nivel1();
+        pelota.setX(panelJuego.getWidth() / 2.0);
+        pelota.setY(400);
     }
 }

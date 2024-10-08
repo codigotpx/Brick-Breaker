@@ -5,10 +5,12 @@ import javax.swing.*;
 public class Nivel {
     private int nivel;
     private Bloques bloques;
+    private Pelota pelota;
 
-    public Nivel(Bloques bloques) {
+    public Nivel(Bloques bloques, Pelota pelota) {
         this.nivel = 0;
         this.bloques = bloques;
+        this.pelota = pelota;
     }
 
     public void pintarNiveles() {
@@ -20,6 +22,7 @@ public class Nivel {
                     break;
                 case 2:
                     nivel2();
+
                     break;
                 case 3:
                     nivel3();

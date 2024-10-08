@@ -6,7 +6,7 @@ public class Pelota {
     private double x, y; // Posición de la pelota
     private double velocidadX, velocidadY; // Velocidad de la pelota
     private double radio; // Radio de la pelota
-    private final double velocidadInicial; // Velocidad constante que siempre tendrá la pelota
+    private double velocidadInicial; // Velocidad constante que siempre tendrá la pelota
 
     public Pelota(double x, double y, double radio, double velocidadX, double velocidadY, double ancho, int alto) {
         this.x = x;
@@ -14,13 +14,14 @@ public class Pelota {
         this.radio = radio;
         this.velocidadX = velocidadX;
         this.velocidadY = velocidadY;
-        this.velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY); // Almacenar la velocidad inicial
+        // this.velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY); // Almacenar la velocidad inicial
     }
 
     public void mover(int anchoPanel, int altoPanel, Barra barra) {
         // Actualizar posición
         x += velocidadX;
         y += velocidadY;
+        velocidadInicial = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
 
         // Rebote en los bordes horizontales
         if (x - radio < 0 || x + radio > anchoPanel) {
@@ -154,5 +155,21 @@ public class Pelota {
 
     public double getRadio() {
         return radio;
+    }
+
+    public void setVelocidadX(double velocidadX) {
+        this.velocidadX = velocidadX;
+    }
+
+    public void setVelocidadY(double velocidadY) {
+        this.velocidadY = velocidadY;
+    }
+
+    public int getVelocidadX() {
+        return (int) velocidadX;
+    }
+
+    public int getVelocidadY() {
+        return (int) velocidadY;
     }
 }

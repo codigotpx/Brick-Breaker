@@ -30,10 +30,6 @@ public class PanelJuego extends JPanel {
         this.bloques = bloques;
         this.vida = vida;
 
-        // Posicionar la pelota encima de la barra al inicio
-        pelota.setX(barra.getX() + barra.getAncho() / 2.0);  // Centrar la pelota en la barra
-        pelota.setY(barra.getY() - pelota.getRadio() - 5);    // Colocar la pelota justo encima de la bar
-
         // Cargar la imagen de la pelota
         imagenPelota = new ImageIcon(getClass().getResource("/resources/imagenes/bolap.png")).getImage();
 
@@ -61,6 +57,10 @@ public class PanelJuego extends JPanel {
         });
 
         setPreferredSize(new Dimension(800, 600));
+    }
+
+    public Vida getVida() {
+        return vida;
     }
 
     public void setFondo(String ruta) {

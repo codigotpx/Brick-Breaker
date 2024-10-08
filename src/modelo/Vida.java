@@ -15,4 +15,8 @@ public class Vida {
         this.Vidas--;
     }
 
+    public void setVidas(int Vidas) {
+        this.Vidas = Vidas;
+    }
+
 }
