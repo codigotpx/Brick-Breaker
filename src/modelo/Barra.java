@@ -70,4 +70,16 @@ public class Barra {
     public int getAnchoPanel() {
         return anchoPanel;
     }
+
+    public void disminuirAnchoBarra(int disminucion) {
+        ancho -= disminucion;
+    }
+    public void disminuirAltoBarra(int barra) {
+        alto -= barra;
+    }
+
+    public void reiniciarBarra() {
+        ancho = 115;
+        alto = 12;
+    }
 }

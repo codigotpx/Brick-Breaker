@@ -6,11 +6,13 @@ public class Nivel {
     private int nivel;
     private Bloques bloques;
     private Pelota pelota;
+    private int puntuacion;
 
     public Nivel(Bloques bloques, Pelota pelota) {
         this.nivel = 0;
         this.bloques = bloques;
         this.pelota = pelota;
+        this.puntuacion = 0;
     }
 
     public void pintarNiveles() {
@@ -103,4 +105,15 @@ public class Nivel {
         return false;
     }
 
+    public void aumentarPuntuación( int incremento) {
+        puntuacion += incremento;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void reiciarPuntos() {
+        puntuacion = 0;
+    }
 }

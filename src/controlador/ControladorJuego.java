@@ -35,8 +35,10 @@ public class ControladorJuego {
 
                 int resultadoColision = pelota.verificarColisionConBloques(bloques);
                 if (resultadoColision == 2) {
+                    nivel.aumentarPuntuación(10);
                     panelJuego.reproducirSonido("resources/sonidos/vidrio-roto.wav"); // Sonido para colisión destructiva
                 } else if (resultadoColision == 1) {
+                    nivel.aumentarPuntuación(5);
                     panelJuego.reproducirSonido("resources/sonidos/breaking-glass.wav"); // Sonido para colisión normal
                 }
 
@@ -55,7 +57,10 @@ public class ControladorJuego {
                 if (bloques.todosDestruidos()) {
                     detener();
                     nivel.pintarNiveles();
+                    nivel.reiciarPuntos();
                     pelota.posicionarPelota();
+                    barra.disminuirAnchoBarra(15);
+                    barra.disminuirAltoBarra(2);
                     barra.posicionarBarra();
                     pelota.setVelocidadX(pelota.getVelocidadX() + 5);
                     pelota.setVelocidadY(pelota.getVelocidadY() + 5);
@@ -97,7 +102,9 @@ public class ControladorJuego {
         pelota.posicionarPelota();
         pelota.setVelocidadX(5);
         pelota.setVelocidadY(5);
+        nivel.reiciarPuntos();
         pelota.activarPelota();
+        barra.reiniciarBarra();
         barra.activarBarra();
         barra.setX((int) barra.getAnchoPanel()/2);
     }

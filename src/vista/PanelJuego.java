@@ -24,6 +24,7 @@ public class PanelJuego extends JPanel {
     private Image imagenPerder;
     private Image imagenGanar;
     private Image fondo;
+    private JLabel puntuacion;
     private Vida vida;
     private Nivel nivel;
 
@@ -43,6 +44,15 @@ public class PanelJuego extends JPanel {
         imagenPerder = cargarImagen("/resources/imagenes/Game-Over.png");
         imagenGanar = cargarImagen("/resources/imagenes/You-win.png");
 
+        // Configurar el JLabel de puntuación
+        puntuacion = new JLabel("Puntuación: " + nivel.getPuntuacion());
+        puntuacion.setBounds(600, 600, 200, 10);
+        puntuacion.setFont(new Font("Arial", Font.BOLD, 14));
+        puntuacion.setForeground(java.awt.Color.WHITE);
+        puntuacion.setOpaque(false);
+        this.setLayout(null); // Asegura que puedes usar `setBounds`
+        this.add(puntuacion); // Añade el JLabel una sola vez
+
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -51,7 +61,8 @@ public class PanelJuego extends JPanel {
             }
 
             @Override
-            public void mouseDragged(MouseEvent e) { }
+            public void mouseDragged(MouseEvent e) {
+            }
         });
 
         setPreferredSize(new Dimension(800, 600));
@@ -76,7 +87,7 @@ public class PanelJuego extends JPanel {
                 fondo = ImageIO.read(url);
                 repaint();
             } else {
-                System.out.println("No se encontro la ruta: " + ruta);
+                System.out.println("No se encontró la ruta: " + ruta);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,15 +119,17 @@ public class PanelJuego extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Actualizar la puntuación
+        puntuacion.setText("Puntuación: " + nivel.getPuntuacion());
+
         // Dibujar la imagen de fondo
         if (fondo != null) {
-            g.drawImage(fondo, 0, 0, getWidth(), getHeight(), null); // Escalar la imagen para llenar el panel
+            g.drawImage(fondo, 0, 0, getWidth(), getHeight(), null);
         }
 
-        // Calcular el tamaño de la pelota en base a su radio y dibujamos la pelota
+        // Dibujar la pelota
         int anchoPelota = (int) (pelota.getRadio() * 2);
         int altoPelota = (int) (pelota.getRadio() * 2);
-
         if (imagenPelota != null) {
             g.drawImage(imagenPelota,
                     (int) (pelota.getX() - pelota.getRadio()),
@@ -126,7 +139,7 @@ public class PanelJuego extends JPanel {
                     this);
         }
 
-        // Dibujar la imagen de la raqueta (barra)
+        // Dibujar la barra
         if (imagenBarra != null) {
             g.drawImage(imagenBarra,
                     barra.getX(),
@@ -136,65 +149,43 @@ public class PanelJuego extends JPanel {
                     this);
         }
 
-        // Dibujar los bloques con el tamaño y posición calculados
+        // Dibujar los bloques
         int margen = 5;
-
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
                 Bloque bloque = bloques.getBloque(i, j);
-                if (bloque.isEstado()) { // Si el bloque está presente
-                    // Calcular posición y tamaño basados en la clase Bloques
+                if (bloque.isEstado()) {
                     int x = bloques.calcularPosicionX(j, margen) - 20;
                     int y = bloques.calcularPosicionY(i, margen) - 30;
-                    int ancho = bloques.getAnchoBloque(margen) + 40; // Ancho exacto del bloque
-                    int alto = bloques.getAltoBloque(margen) + 100; // Alto exacto del bloque
+                    int ancho = bloques.getAnchoBloque(margen) + 40;
+                    int alto = bloques.getAltoBloque(margen) + 100;
 
                     Image imagenBloque = bloque.getDurabilidad() == 1 ? imagenBloqueVivo : imagenBloqueMuerto;
-
                     g.drawImage(imagenBloque, x, y, ancho, alto, this);
                 }
             }
         }
 
-        // Dibujamos las vidas
+        // Dibujar las vidas
         if (imagenVida != null) {
             int x = 0;
             for (int i = 0; i < vida.getVidas(); i++) {
-                g.drawImage(imagenVida,
-                        x,
-                        550,
-                        110,
-                        100,
-                        this);
+                g.drawImage(imagenVida, x, 550, 110, 100, this);
                 x += 20;
             }
         }
 
-        // Dibujamos el game over
-        if (imagenPerder != null) {
-            if (vida.getVidas() == 0) {
-                g.drawImage(imagenPerder,
-                         30,
-                        5,
-                        700,
-                        700,
-                        this);
-            }
+        // Dibujar "Game Over"
+        if (imagenPerder != null && vida.getVidas() == 0) {
+            g.drawImage(imagenPerder, 30, 5, 700, 700, this);
         }
 
-        // Dibujamos el tu ganas
-        if (imagenGanar != null) {
-            if (nivel.ganar()) {
-                g.drawImage(imagenGanar,
-                        30,
-                        5,
-                        700,
-                        700,
-                        this);
-            }
+        // Dibujar "You Win"
+        if (imagenGanar != null && nivel.ganar()) {
+            g.drawImage(imagenGanar, 30, 5, 700, 700, this);
         }
-
     }
+
     public void actualizarPanel() {
         repaint();
     }
