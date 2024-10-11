@@ -1,43 +1,44 @@
 package modelo;
 
 import javax.sound.sampled.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class Musica {
-    private Clip clip;
-    private boolean estado;
+    private Clip clip;  // Clip para manejar el sonido
+    private boolean estado = true;
 
-    public Musica() {
-        this.estado = true;
-    }
-
-    public void iniciarMusica(String url) {
+    // Método para reproducir sonido
+    public void iniciarMusica(String rutaArchivo) {
         try {
-            // Cargar el archivo de música como un InputStream
-            InputStream audioSrc = getClass().getResourceAsStream(url);
-            if (audioSrc == null) {
-                throw new IOException("El recurso no se pudo encontrar: " + url);
-            }
+            // Obtener el InputStream del archivo de sonido
+            InputStream audioSrc = getClass().getResourceAsStream(rutaArchivo);
+            InputStream bufferedIn = new BufferedInputStream(audioSrc);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
 
-            // Crear el AudioInputStream desde el InputStream
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioSrc);
+            // Crear un nuevo clip y abrir el flujo de audio
             clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Reproduce en bucle
-            clip.start(); // Inicia la reproducción
-        } catch (UnsupportedAudioFileException e) {
-            System.err.println("Formato de archivo no soportado: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Error al cargar la música: " + e.getMessage());
-        } catch (LineUnavailableException e) {
-            System.err.println("Línea no disponible: " + e.getMessage());
+            clip.open(audioStream);
+
+            // Reproducir el sonido
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
         }
     }
 
+    // Método para detener el sonido
     public void pararMusica() {
         if (clip != null && clip.isRunning()) {
-            clip.stop();
+            clip.stop();  // Detener la música
+        }
+    }
+
+    // Método para cerrar y liberar recursos del sonido
+    public void cerrarSonido() {
+        if (clip != null) {
+            clip.stop();  // Asegurarse de detener el clip
+            clip.flush();  // Limpiar cualquier dato en el buffer de audio
+            clip.close();  // Cerrar el clip y liberar los recursos
         }
     }
 

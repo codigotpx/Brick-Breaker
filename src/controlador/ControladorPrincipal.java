@@ -80,6 +80,7 @@ public class ControladorPrincipal {
                     menuJuego.actualizarIconoMusica(musica.getEstadoMusica());
                 } else {
                     musica.pararMusica();
+                    musica.cerrarSonido();
                     musica.cambiarEstado(false);
                     menuJuego.actualizarIconoMusica(musica.getEstadoMusica());
                 }
