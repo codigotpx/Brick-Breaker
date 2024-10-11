@@ -15,13 +15,10 @@ public class MenuJuego extends JPanel {
         fondoMenu = new ImageIcon(getClass().getResource("/resources/imagenes/Espaciop.jpg")).getImage();
 
         // Cargar la imagen del icono
-        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/resources/imagenes/Titulo.png")); // Ajusta la ruta de la imagen
-
-        // Escalar el icono a un tamaño más pequeño (ej. 100x100 píxeles)
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/resources/imagenes/Titulo.png"));
         Image iconoEscalado = iconoOriginal.getImage().getScaledInstance(350, 150, Image.SCALE_SMOOTH);
-        tituloIcono = new JLabel(new ImageIcon(iconoEscalado)); // Crear un JLabel con la imagen escalada
+        tituloIcono = new JLabel(new ImageIcon(iconoEscalado));
 
-        // Configurar el diseño del panel como GridBagLayout para un diseño más flexible
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -38,7 +35,7 @@ public class MenuJuego extends JPanel {
         // Crear el botón de Iniciar Juego
         botonIniciar = new JButton("Iniciar Juego");
         botonIniciar.setFont(new Font("Arial", Font.PLAIN, 24));
-        botonIniciar.setBackground(new Color(34, 139, 34)); // Cambiar color de fondo
+        botonIniciar.setBackground(new Color(9, 39, 83)); // Cambiar color de fondo
         botonIniciar.setForeground(Color.WHITE); // Cambiar color de texto
         botonIniciar.setFocusPainted(false);
         botonIniciar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
@@ -52,7 +49,7 @@ public class MenuJuego extends JPanel {
         // Crear el botón de Salir
         botonSalir = new JButton("Salir");
         botonSalir.setFont(new Font("Arial", Font.PLAIN, 24));
-        botonSalir.setBackground(new Color(178, 34, 34)); // Color de fondo del botón
+        botonSalir.setBackground(new Color(1, 24, 59)); // Color de fondo del botón
         botonSalir.setForeground(Color.WHITE); // Cambiar color del texto
         botonSalir.setFocusPainted(false);
         botonSalir.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));

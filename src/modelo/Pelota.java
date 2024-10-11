@@ -153,16 +153,7 @@ public class Pelota {
     public void activarPelota(){
         pelotaActiva = true;
     }
-    // setter
-    public void setX(double x) {
-        this.x = x;
-    }
 
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    // Métodos getter
     public double getX() {
         return x;
     }

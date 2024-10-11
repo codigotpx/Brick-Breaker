@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -16,11 +17,11 @@ public class PanelJuego extends JPanel {
     private Barra barra;
     private Bloques bloques;
     private Image imagenPelota;
-    private Image imagenBarra; // Declarar la imagen de la raqueta
-    private Image imagenBloqueVivo; // Imagen para bloque con resistencia
-    private Image imagenBloqueMuerto; // Imagen para bloque sin resistencia
-    private Image imagenVida; // Imagen para las vidas
-    private Image imagenPerder; // Imagen para el fin del juego
+    private Image imagenBarra;
+    private Image imagenBloqueVivo;
+    private Image imagenBloqueMuerto;
+    private Image imagenVida;
+    private Image imagenPerder;
     private Image imagenGanar;
     private Image fondo;
     private Vida vida;
@@ -33,23 +34,14 @@ public class PanelJuego extends JPanel {
         this.vida = vida;
         this.nivel = nivel;
 
-        // Cargar la imagen de la pelota
-        imagenPelota = new ImageIcon(getClass().getResource("/resources/imagenes/bolap.png")).getImage();
-
-        // Cargar la imagen de la raqueta
-        imagenBarra = new ImageIcon(getClass().getResource("/resources/imagenes/NaveRaqueta.png")).getImage();
-
-        // Cargar imágenes de bloques
-        imagenBloqueVivo = new ImageIcon(getClass().getResource("/resources/imagenes/CristalNuevo.png")).getImage();
-        imagenBloqueMuerto = new ImageIcon(getClass().getResource("/resources/imagenes/CristalRoto.png")).getImage();
-
-        imagenVida = new ImageIcon(getClass().getResource("/resources/imagenes/vida.png")).getImage();
-
-        // Cargar imagenes de game over
-        imagenPerder = new ImageIcon(getClass().getResource("/resources/imagenes/Game-Over.png")).getImage();
-
-        // Cargar imagen de ganar
-        imagenGanar = new ImageIcon(getClass().getResource("/resources/imagenes/You-win.png")).getImage();
+        // Cargar la imagenes del juego
+        imagenPelota = cargarImagen("/resources/imagenes/bolap.png");
+        imagenBarra = cargarImagen("/resources/imagenes/NaveRaqueta.png");
+        imagenBloqueVivo = cargarImagen("/resources/imagenes/CristalNuevo.png");
+        imagenBloqueMuerto = cargarImagen("/resources/imagenes/CristalRoto.png");
+        imagenVida = cargarImagen("/resources/imagenes/vida.png");
+        imagenPerder = cargarImagen("/resources/imagenes/Game-Over.png");
+        imagenGanar = cargarImagen("/resources/imagenes/You-win.png");
 
         addMouseMotionListener(new MouseMotionListener() {
             @Override
@@ -63,6 +55,17 @@ public class PanelJuego extends JPanel {
         });
 
         setPreferredSize(new Dimension(800, 600));
+    }
+
+    private Image cargarImagen(String ruta) {
+        Image imagen = null;
+        try {
+            imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
+        } catch (Exception e) {
+            System.out.println("Error en la imagen de la imagen: " + ruta);
+            e.printStackTrace();
+        }
+        return imagen;
     }
 
     public void setFondo(String ruta) {
@@ -87,7 +90,6 @@ public class PanelJuego extends JPanel {
                 System.out.println("No se encontró el archivo " + rutaArchivo);
                 return;
             }
-
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
 
             Clip clip = AudioSystem.getClip();
@@ -111,11 +113,10 @@ public class PanelJuego extends JPanel {
             g.drawImage(fondo, 0, 0, getWidth(), getHeight(), null); // Escalar la imagen para llenar el panel
         }
 
-        // Calcular el tamaño de la pelota en base a su radio
+        // Calcular el tamaño de la pelota en base a su radio y dibujamos la pelota
         int anchoPelota = (int) (pelota.getRadio() * 2);
         int altoPelota = (int) (pelota.getRadio() * 2);
 
-        // Dibujar la imagen de la pelota
         if (imagenPelota != null) {
             g.drawImage(imagenPelota,
                     (int) (pelota.getX() - pelota.getRadio()),
@@ -136,7 +137,7 @@ public class PanelJuego extends JPanel {
         }
 
         // Dibujar los bloques con el tamaño y posición calculados
-        int margen = 5; // Margen entre bloques
+        int margen = 5;
 
         for (int i = 0; i < bloques.getFilas(); i++) {
             for (int j = 0; j < bloques.getColumnas(); j++) {
@@ -148,10 +149,8 @@ public class PanelJuego extends JPanel {
                     int ancho = bloques.getAnchoBloque(margen) + 40; // Ancho exacto del bloque
                     int alto = bloques.getAltoBloque(margen) + 100; // Alto exacto del bloque
 
-                    // Elegir la imagen según el estado del bloque
                     Image imagenBloque = bloque.getDurabilidad() == 1 ? imagenBloqueVivo : imagenBloqueMuerto;
 
-                    // Dibujar la imagen del bloque en la posición y tamaño calculados
                     g.drawImage(imagenBloque, x, y, ancho, alto, this);
                 }
             }

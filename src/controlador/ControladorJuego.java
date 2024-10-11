@@ -14,7 +14,7 @@ public class ControladorJuego {
     private PanelJuego panelJuego;
     private Nivel nivel;
     private Timer temporizador;
-    private boolean enMovimiento;  // Variable para verificar si el juego ya está en movimiento
+    private boolean enMovimiento;
     private Vida vida;
 
     public ControladorJuego(Pelota pelota, Barra barra, PanelJuego panelJuego, Bloque bloque, Bloques bloques, Nivel nivel, Vida vida) {
@@ -24,7 +24,7 @@ public class ControladorJuego {
         this.bloque = bloque;
         this.bloques = bloques;
         this.nivel = nivel;
-        this.enMovimiento = false;  // Al principio, el juego no está en movimiento
+        this.enMovimiento = false;
         this.vida = vida;
 
         temporizador = new Timer(15, new ActionListener() {
@@ -33,16 +33,17 @@ public class ControladorJuego {
                 pelota.mover(barra);
                 panelJuego.actualizarPanel();
 
-                // Manejar colisiones con bloques
                 int resultadoColision = pelota.verificarColisionConBloques(bloques);
                 if (resultadoColision == 2) {
                     panelJuego.reproducirSonido("resources/sonidos/vidrio-roto.wav"); // Sonido para colisión destructiva
                 } else if (resultadoColision == 1) {
                     panelJuego.reproducirSonido("resources/sonidos/breaking-glass.wav"); // Sonido para colisión normal
                 }
+
                 if (pelota.verificarColision(barra)) {
                     panelJuego.reproducirSonido("resources/sonidos/golpe-seco.wav");
                 }
+
                 if (pelota.verificarColisionInferior(600)) {
                     panelJuego.reproducirSonido("resources/sonidos/sound-game_over.wav");
                     vida.eliminarVida();
@@ -50,6 +51,7 @@ public class ControladorJuego {
                     barra.posicionarBarra();
                     detener();
                 }
+
                 if (bloques.todosDestruidos()) {
                     detener();
                     nivel.pintarNiveles();
@@ -65,22 +67,22 @@ public class ControladorJuego {
         panelJuego.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!enMovimiento && vida.getVidas() > 0) {  // Verificar si el juego está detenido
+                if (!enMovimiento && vida.getVidas() > 0) {
                     enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
                     temporizador.start();
-                    iniciar();  // Iniciar el temporizador para que la pelota comience a moverse
+                    iniciar();
                 }
             }
         });
     }
 
     public void iniciar() {
-        enMovimiento = true;  // Cambiar el estado para indicar que el juego está en movimiento
+        enMovimiento = true;
         temporizador.start();
     }
 
     public void detener() {
-        enMovimiento = false;  // Cambiar el estado para indicar que el juego está detenido
+        enMovimiento = false;
         temporizador.stop();
     }
     public void pausarJuego(){
